@@ -16,9 +16,9 @@ export class AuthService {
 
     }
 
-    authenticate(creds : CredenciaisDTO) {
+    authenticate(creds: CredenciaisDTO) {
         return this.http.post(
-            `${API_CONFIG.baseUrl}/login`, 
+            `${API_CONFIG.baseUrl}/login`,
             creds,
             {
                 observe: 'response',
@@ -26,9 +26,21 @@ export class AuthService {
             });
     }
 
-    successfulLogin(authorizationValue : string) {
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`,
+            {},
+            {
+                observe: 'response',
+                // como a resposta vem vazia é importante colocar o text
+                // para o framework não dar erro de parse achando que é um json voltando.
+                responseType: 'text'
+            });
+    }
+
+    successfulLogin(authorizationValue: string) {
         let tok = authorizationValue.substring(7);
-        let user : LocalUser = {
+        let user: LocalUser = {
             token: tok,
             email: this.jwtHelper.decodeToken(tok).sub
         }
