@@ -1,5 +1,7 @@
 {
   "name": "conceptmodel-mclient",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
